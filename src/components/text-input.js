@@ -1,5 +1,5 @@
-import React, {Component} from 'react'
-import PropTypes from 'proptypes'
+import React, {Component} from 'react';
+import PropTypes from 'proptypes';
 
 class TextInput extends Component {
     constructor(props) {
@@ -9,26 +9,30 @@ class TextInput extends Component {
             text: ''
         };
     }
-    handleChange(e){
+      handleChange(e){
         this.setState({
             text: e.target.value
         });
-    };
+    }
     render() {
-        return (<div align="center">
-            <p>{this.props.name}</p>
-            <input name={this.props.name}
-                   autoFocus="true"
-                   type="text"
-                   value={this.state.text}
-                   onChange={this.handleChange}/>
-        </div>)
+        return  <input  name={this.props.name}
+                        autoFocus="true"
+                        type="text"
+                        align="center"
+                        placeholder={this.props.placeholder}
+                        value={this.state.text}
+                        onBlur={this.props.onBlur}
+                        onChange={this.handleChange}
+                        onKeyDown={this.props.onKeyDown}/>;
     }
 }
 
 TextInput.propTypes = {
     name: PropTypes.string,
     text: PropTypes.string,
+    onBlur: PropTypes.func,
+    onKeyDown: PropTypes.func,
+    placeholder: PropTypes.string
 };
 
 export default TextInput;

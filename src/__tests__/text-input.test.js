@@ -1,26 +1,25 @@
-import React from 'react'
+import React from 'react';
 import Enzyme,{mount,shallow} from 'enzyme';
 import TextInput from "../components/text-input";
-import Adapter from 'enzyme-adapter-react-16'
+import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-test('testApareceNomeDoTextInput',() => {
-    const name = 'example';
-    let textInput = shallow(<TextInput name = {name}/>);
-    const description = textInput.find('p').text();
-    expect(description).toBe(name)
+test('testAparecePlaceHolder',() => {
+    const placeholder = 'example';
+    let textInput = shallow(<TextInput placeholder={placeholder}/>);
+    const description = textInput.props().placeholder;
+    expect(description).toBe(placeholder);
 });
 test('testAtualizarValueAoDigitar',()=>{
     const value = "value";
     let component = mount(<TextInput/>);
-    let input = component.find('input');
     const event = {
         target: {
-            value
+            value: value
         }
     };
-    input.simulate('change', event);
-    expect(input.prop('value')).toBe(value)
+    component.simulate('change', event);
+    expect(component.children().prop('value')).toBe(value);
 });
 

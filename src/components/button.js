@@ -1,18 +1,18 @@
-import React,{Component} from 'react'
-import PropTypes from 'proptypes'
+import React from 'react';
+import PropTypes from 'proptypes';
 
-class Button extends Component{
-    render(){
+const Button  = ({onClick,name}) => {
+    {
         return (
-            <button onClick={this.props.onClick}>
-                {this.props.name}
+            <button onClick={onClick}>
+                {name}
             </button>
-        )
+        );
     }
-}
+};
 Button.propTypes = {
     onClick : PropTypes.func,
     name : PropTypes.string
 };
 
-export default Button
+export default Button;
