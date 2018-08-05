@@ -1,72 +1,115 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
 }
 
 .App-title {
-  font-size: 1.5em;
+    font-size: 1.5em;
 }
 
 .App-intro {
-  font-size: large;
+    font-size: large;
 }
 
-.dropdown{
-    position: relative;
+.text-input {
+    width: 100%;
+    height: 30px;
+}
+.month {
+    padding: 70px 25px;
+    background: #1abc9c;
+    color: #666;
+    text-align: center;
+}
+.ul {
+    list-style-type: none;
+    padding: 0 !important;
+}
+
+.month .prev {
+    cursor: pointer;
+    float: left;
+    padding-top: 10px;
+}
+
+.month .next {
+    cursor: pointer;
+    float: right;
+    padding-top: 10px;
+}
+
+.weekdays {
+    margin: 0;
+    padding: 10px 0;
+    background-color:#ddd;
+}
+
+.weekdays li {
     display: inline-block;
+    width: 13.6%;
+    color: #666;
+    text-align: center;
 }
 
-.dropbtn{
-    background-color: white;
-    color: black;
-    font-size: 16px;
-    border: 2px solid;
-    margin: 2px;
+.days {
+    padding: 10px 0;
+    background: #eee;
+    margin: 0;
+}
+
+.days li {
+    list-style-type: none;
+    display: inline-block;
+    width: 13.6%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size:18px;
+    color: #777;
     cursor: pointer;
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    z-index: 1;
+.days li .active {
+    border-radius: 50%;
+    padding: 10px;
+    background: #1abc9c;
+    color: white !important
 }
-
-.dropdown-element{
-    cursor: pointer;
+.create {
+    width: 50%;
+    height: 100%;
 }
-
-.dropdown-content a {
-    color: black;
-    text-decoration: none;
-    display: block;
+.button-save{
+    height: 30px;
+    background-color: #1abc9c;
+    border-color: #1abc9c;
+    color: #ffffff;
+    border-radius:4px;
+    font-size:18px;
 }
-
-.dropdown-content a:hover {
-    border-color: gray;
+.button-cancel{
+    border-radius:4px;
+    height: 30px;
+    background-color: #b82c46;
+    border-color: #b82c46;
+    color: #ffffff;
+    font-size:18px;
 }
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.dropdown:hover .dropbtn {
-    border-color: gray;
-}
-
-
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
