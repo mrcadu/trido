@@ -14,7 +14,7 @@ class SelectMany extends Component {
 }
 
 SelectMany.propTypes = {
-    elements: PropTypes.options
+    options: PropTypes.array
 };
 
 export default SelectMany;
