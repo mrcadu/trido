@@ -7,28 +7,21 @@ import Calendar from "./calendar";
 import Button from "./button";
 import {reduxForm, Field} from "redux-form";
 
-const onSubmit = values => alert(JSON.stringify(values));
-const validateNotEmpty = value => !value ? 'Must enter a value' : null;
-
 class AddTarefa extends Component {
-
+    constructor(props){
+        super(props)
+    }
     render() {
-        const options = [
-            {value: 'importante', label: 'importante'},
-            {value: 'circunstancial', label: 'circunstancial'},
-            {value: 'urgente', label: 'urgente'}
-        ];
         return (
-            <form onSubmit={this.props.handleSubmit(onSubmit)}
+            <form onSubmit={this.props.handleSubmit(this.props.onSubmit)}
                   style={{margin: '20px'}}>
                 <div style={{marginBottom: '20px'}}>
                     <label className="formLabel">Tarefa</label>
-                    <div >
+                    <div>
                         <Field label="tarefa"
                                placeholder="Tarefa"
                                name="tarefa"
                                component={TextInput}
-                               validate={validateNotEmpty}
                                type="text"
                                className="formElement"/>
                     </div>
@@ -40,7 +33,6 @@ class AddTarefa extends Component {
                                placeholder="Duração"
                                name="duracao"
                                component={TextInput}
-                               validate={validateNotEmpty}
                                type="text"/>
                     </div>
                 </div>
@@ -75,7 +67,11 @@ class AddTarefa extends Component {
                            style={{width: '40%'}}/>
                 </div>
 
-                <Button type="submit" onSubmit={this.props.handleSubmit} label="Salvar" className="button-save" style={{float: 'right'}}/>
+                <Button type="submit"
+                        label="Salvar"
+                        className="button-save"
+                        style={{float: 'right'}}/>
+
                 <Button label="Cancelar" className="button-cancel" style={{float: 'left'}}/>
             </form>
         );
@@ -84,7 +80,8 @@ class AddTarefa extends Component {
 
 
 AddTarefa.propTypes = {
-    handleSubmit: PropTypes.function
+    handleSubmit: PropTypes.func,
+    onSubmit : PropTypes.func
 };
 export default reduxForm({
     form: 'addTarefa',
