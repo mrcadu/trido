@@ -6,15 +6,17 @@ import makeAnimated from 'react-select/lib/animated';
 class SelectMany extends Component {
     render() {
         return (
-            <Select options = {this.props.value}
+            <Select options = {this.props.options}
                     components={makeAnimated()}
-                    isMulti />
+                    isMulti
+                    value={this.props.value}/>
         );
     }
 }
 
 SelectMany.propTypes = {
-    value: PropTypes.array
+    options: PropTypes.array,
+    value:PropTypes.array
 };
 
 export default SelectMany;
