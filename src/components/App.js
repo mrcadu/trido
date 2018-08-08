@@ -4,13 +4,9 @@ import AddTarefa from "./add-tarefa";
 
 class App extends Component {
   render() {
-    const options = [
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' }
-    ]
-    return (
-          <AddTarefa options = {options}/>
+      const onSubmit = values => alert(JSON.stringify(values));
+      return (
+          <AddTarefa onSubmit={onSubmit}/>
     );
   }
 }
