@@ -7,12 +7,14 @@ class SelectOne extends Component{
     render(){
         return(<Select  components={makeAnimated()}
                         options={this.props.options}
+                        value = {this.props.value}
                         style={{margin: '15px 10px 0px 10px'}}
-                        value = {this.props.value}/>);
+                        onChange={this.props.handleChange}/>);
     }
 }
 SelectOne.propTypes = {
     options: PropTypes.array,
-    value:PropTypes.string
+    value:PropTypes.string,
+    handleChange:PropTypes.func
 };
 export default SelectOne;

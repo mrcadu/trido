@@ -9,6 +9,7 @@ class SelectMany extends Component {
             <Select options = {this.props.options}
                     components={makeAnimated()}
                     isMulti
+                    onChange={this.props.handleChange}
                     value={this.props.value}/>
         );
     }
