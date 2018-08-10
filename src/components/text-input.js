@@ -1,27 +1,26 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'proptypes';
 
-class TextInput extends Component {
-    render() {
-        return <input name={this.props.name}
-                      type="text"
-                      autoFocus={true}
-                      placeholder={this.props.placeholder}
-                      value={this.props.value}
-                      onBlur={this.props.onBlur}
-                      onChange={this.props.handleChange}
-                      onKeyDown={this.props.onKeyDown}
-                      style={this.props.style}
-                      className="text-input"/>;
-    }
-}
+const TextInput = ({name, value, handleChange, placeholder, style, onBlur, onKeyDown}) => {
+    return (<input name={name}
+                   type="text"
+                   autoFocus
+                   placeholder={placeholder}
+                   value={value}
+                   onBlur={onBlur}
+                   onChange={handleChange}
+                   onKeyDown={onKeyDown}
+                   style={style}
+                   className="text-input"/>
+    );
+};
+
 TextInput.propTypes = {
     name: PropTypes.string,
     value: PropTypes.string,
-    handleChange : PropTypes.func,
+    handleChange: PropTypes.func,
     placeholder: PropTypes.string,
     style: PropTypes.object,
-    className: PropTypes.string,
 };
 
 export default TextInput;
