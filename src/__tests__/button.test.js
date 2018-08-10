@@ -1,19 +1,30 @@
-import React from 'react'
+import React from 'react';
 import Button from "../components/button";
-import Enzyme,{shallow, mount} from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16'
+import Enzyme, {shallow} from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
-Enzyme.configure({ adapter: new Adapter() });
+Enzyme.configure({adapter: new Adapter()});
 
-test('testNomeAparecendo',()=>{
+test('testNomeAparecendo', () => {
     let text = 'salvar';
-    const button = shallow(<Button name={text}/>);
+    const button = shallow(<Button label={text}/>);
     expect(button.type()).toBe('button');
     expect(button.props().children).toBe(text);
 });
-test('testChamaMetodoOnClick',()=>{
+test('testChamaMetodoOnClick', () => {
     const onClick = jest.fn();
-    let tree = mount((<Button onClick={onClick}/>));
-    tree.find('button').simulate('click');
-    expect(onClick).toBeCalled()
+    let button = shallow((<Button onClick={onClick}/>));
+    button.find('button').simulate('click');
+    expect(onClick).toBeCalled();
+});
+test('styleWasApplied', () => {
+    const exampleStyle = {
+        margin:'10px'
+    };
+    let button = shallow((<Button style={exampleStyle}/>));
+    expect(button.find('button').prop('style')).toBe(exampleStyle);
+});
+test('classNameWasApplied', () => {
+    let button = shallow((<Button className="exampleStyle"/>));
+    expect(button.find('button').prop('className')).toBe("exampleStyle");
 });
