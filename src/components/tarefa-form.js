@@ -7,13 +7,28 @@ import Calendar from "./calendar";
 import Button from "./button";
 import {reduxForm, Field} from "redux-form";
 
-class AddTarefa extends Component {
+class TarefaForm extends Component {
     componentWillMount() {
-        this.props.initialize({
-            calendar: new Date(),
-            papeis: [],
-            equilibrio: []
-        });
+        if(this.props.tarefa) {
+            this.props.initialize({
+                tarefa : this.props.tarefa.tarefa,
+                duracao:this.props.tarefa.duracao,
+                calendar: this.props.tarefa.calendar,
+                papeis: this.props.tarefa.papeis,
+                meta : this.props.tarefa.metas,
+                equilibrio: this.props.tarefa.equilibrio,
+            });
+        }
+        else{
+            this.props.initialize({
+                tarefa : "",
+                duracao:"",
+                meta : "",
+                calendar: new Date(),
+                papeis: [],
+                equilibrio: []
+            });
+        }
     }
 
     render() {
@@ -127,10 +142,11 @@ class AddTarefa extends Component {
 }
 
 
-AddTarefa.propTypes = {
+TarefaForm.propTypes = {
     handleSubmit: PropTypes.func,
-    onSubmit: PropTypes.func
+    onSubmit: PropTypes.func,
+    tarefa:PropTypes.object
 };
 export default reduxForm({
     form: 'addTarefa',
-})(AddTarefa);
+})(TarefaForm);
