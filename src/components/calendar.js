@@ -1,35 +1,27 @@
-import React, {Component} from 'react';
-import PropTypes from 'proptypes'
+import React,{Component} from 'react';
+import PropTypes from 'proptypes';
 
 class Calendar extends Component {
-    constructor(props) {
-        super(props);
-        this.prevMonth = this.prevMonth.bind(this);
-        this.nextMonth = this.nextMonth.bind(this);
-        this.selectDay = this.selectDay.bind(this);
-        Calendar.daysInMonth = Calendar.daysInMonth.bind(this);
-
-
-        const currentDate = new Date();
-        this.state = {
-            currentDate: new Date(),
-            monthDays: Calendar.daysInMonth(currentDate.getMonth() + 1, currentDate.getFullYear()),
-        };
-    }
-
     static daysInMonth(month, year, currentDay) {
-        const dias = new Date(year, month, 0).getDate();
+        let dias = new Date(year, month + 1 , 0).getDate();
+        const weekDay = new Date(year, month, 1).getDay();
         let dias_array = [];
-        for (let i = 1; i <= dias; i++) {
+        for (let i = 1-weekDay ; i <= dias; i++) {
             if (i === currentDay) {
                 dias_array.push({
                     dia: i,
                     active: true
                 });
             }
-            else {
+            else if(i<=0) {
                 dias_array.push({
-                    dia: i,
+                    dia: "",
+                    active: false
+                });
+            }
+            else if(i>0){
+                dias_array.push({
+                    dia:i,
                     active: false
                 });
             }
@@ -37,32 +29,30 @@ class Calendar extends Component {
         return dias_array;
     }
 
-    selectDay(day) {
-        this.setState(prevState => ({
-            monthDays: Calendar.daysInMonth(prevState.currentDate.getMonth(), prevState.currentDate.getFullYear(), day.dia)
-        }));
-
+    constructor(props) {
+        super(props);
+        this.prevMonth = this.prevMonth.bind(this);
+        this.nextMonth = this.nextMonth.bind(this);
+        Calendar.daysInMonth = Calendar.daysInMonth.bind(this);
+        const currentDate = this.props.value;
+        this.state = {
+            monthDays: Calendar.daysInMonth(currentDate.getMonth(), currentDate.getFullYear(),currentDate.getDate())
+        };
     }
 
     prevMonth() {
-        this.setState(prevState => ({
-            currentDate: new Date(prevState.currentDate.getFullYear(), prevState.currentDate.getMonth() - 1, prevState.currentDate.getDate()),
-            monthDays: Calendar.daysInMonth(prevState.currentDate.getMonth(), prevState.currentDate.getFullYear())
-        }));
+        this.props.handleChange(new Date(new Date(this.props.value.getFullYear(), this.props.value.getMonth() - 1, this.props.value.getDate())));
     }
 
     nextMonth() {
-        this.setState(prevState => ({
-            currentDate: new Date(prevState.currentDate.getFullYear(), prevState.currentDate.getMonth() + 1, prevState.currentDate.getDate()),
-            monthDays: Calendar.daysInMonth(prevState.currentDate.getMonth(), prevState.currentDate.getFullYear())
-        }));
+        this.props.handleChange(new Date(new Date(this.props.value.getFullYear(), this.props.value.getMonth() + 1, this.props.value.getDate())));
     }
 
     render() {
-        const days = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"];
+        const days = ["Dom","Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
 
         function getCurrentMonth() {
-            const currentMonth = this.state.currentDate.toLocaleString("pt-br", {month: "long"});
+            const currentMonth = this.props.value.toLocaleString("pt-br", {month: "long"});
             return currentMonth.charAt(0).toUpperCase().concat(currentMonth.slice(1));
         }
 
@@ -73,7 +63,7 @@ class Calendar extends Component {
                         <li className="prev" onClick={this.prevMonth}>&#10094;</li>
                         <li className="next" onClick={this.nextMonth}>&#10095;</li>
                         <li style={{fontSize: "30px"}}>{getCurrentMonth.call(this)}<br/><span
-                            style={{fontSize: "18px"}}>{this.state.currentDate.getFullYear()}</span></li>
+                            style={{fontSize: "18px"}}>{this.props.value.getFullYear()}</span></li>
                     </ul>
                 </div>
                 <ul className="weekdays">
@@ -85,16 +75,18 @@ class Calendar extends Component {
                 </ul>
                 <ul className="days">
                     {
-                        this.state.monthDays.map((day) => {
-                            if (day.active === false) {
-                                return (<li onClick={() => this.selectDay(day)}
+                        Calendar.daysInMonth(this.props.value.getMonth(),this.props.value.getFullYear(),this.props.value.getDate()).map((day) => {
+                            if(day.dia === ""){
+                                return <li key={"empty-day".concat(Math.random() * 255)}/>;
+                            }
+                            else if(day.active ===true) {
+                                return (<li onClick={() => this.props.handleChange(new Date(this.props.value.getFullYear(),this.props.value.getMonth(),day.dia))}
+                                            key={"day-active".concat(day.dia)}><span className="active">{day.dia}</span></li>);
+                            }
+                            else if (day.active === false) {
+                                return (<li onClick={() => this.props.handleChange(new Date(this.props.value.getFullYear(),this.props.value.getMonth(),day.dia))}
                                             className="days"
                                             key={"day".concat(day.dia)}>{day.dia}</li>);
-                            }
-                            else {
-                                return (<li onClick={() => this.selectDay(day)}
-                                            className="active"
-                                            key={"day".concat(day.dia)}><span className="active">{day.dia}</span></li>);
                             }
                         })
                     }
@@ -102,8 +94,15 @@ class Calendar extends Component {
             </div>);
     }
 }
+
 Calendar.propTypes = {
+    value: PropTypes.instanceOf(Date),
+    handleChange: PropTypes.func,
     style: PropTypes.object,
     className: PropTypes.string
 };
+Calendar.defaultProps = {
+    value: new Date(),
+};
+
 export default Calendar;

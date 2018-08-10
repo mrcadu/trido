@@ -8,8 +8,12 @@ import Button from "./button";
 import {reduxForm, Field} from "redux-form";
 
 class AddTarefa extends Component {
-    constructor(props) {
-        super(props);
+    componentWillMount() {
+        this.props.initialize({
+            calendar: new Date(),
+            papeis: [],
+            equilibrio: []
+        });
     }
 
     render() {
@@ -61,7 +65,7 @@ class AddTarefa extends Component {
                                        {value: 'vanilla', label: 'Vanilla'}
                                    ]}
                                    placeholder="Duração"
-                                   handleChange = {(selectedOption) => props.input.onChange(selectedOption)}/>}
+                                   handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}
                            style={{marginBottom: '20px'}}/>
                 </div>
 
@@ -79,7 +83,7 @@ class AddTarefa extends Component {
                                        {value: 'vanilla', label: 'Vanilla'}
                                    ]}
                                    placeholder="Duração"
-                                   handleChange = {(selectedOption) => props.input.onChange(selectedOption)}/>}/>
+                                   handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}/>
                 </div>
 
                 <div style={{marginBottom: '20px'}}>
@@ -96,15 +100,19 @@ class AddTarefa extends Component {
                                        {value: 'vanilla', label: 'Vanilla'}
                                    ]}
                                    placeholder="Duração"
-                                   handleChange = {(selectedOption) => props.input.onChange(selectedOption)}/>}/>
+                                   handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}/>
                 </div>
 
-                <div align="center" style={{marginBottom: '20px'}}>
+                <div style={{marginBottom: '20px'}}>
                     <Field label="calendar"
                            placeholder="calendar"
                            name="calendar"
-                           component={Calendar}
-                           style={{width: '40%'}}/>
+                           type="date"
+                           component={props =>
+                               <Calendar
+                                   value={props.input.value}
+                                   handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}
+                    />
                 </div>
 
                 <Button type="submit"

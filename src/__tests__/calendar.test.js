@@ -6,35 +6,47 @@ import Adapter from 'enzyme-adapter-react-16'
 Enzyme.configure({ adapter: new Adapter() });
 
 test('testDaysInMonth',() => {
-    const days = Calendar.daysInMonth(11,1998);
-    expect(days.length).toBe(30)
+    const mes = 11;
+    const ano = 1998;
+    const days = Calendar.daysInMonth(mes,ano);
+    const dias = new Date(ano, mes + 1 , 0).getDate();
+    const weekDay = new Date(ano, mes, 1).getDay();
+    expect(days.length).toBe(dias + weekDay)
 });
 
 test('testDaysInMonthSelectingDay',() => {
-    const days = Calendar.daysInMonth(11,1998,15);
-    expect(days[14].active).toBe(true)
+    const mes = 11;
+    const ano = 1998;
+    const dia = 15;
+    const days = Calendar.daysInMonth(mes,ano,dia);
+    expect(days[dia + ( new Date(ano, mes, 1).getDay() - 1)].active).toBe(true)
 });
 
 test('testPrevMonth',() =>{
-    const calendar = mount(<Calendar/>);
+    const handleChange = jest.fn();
+    const calendar = mount(<Calendar handleChange={handleChange}/>);
     const prevButton = calendar.find('.prev');
-    const prevState = calendar.state('currentDate').getMonth();
     prevButton.simulate('click');
-    const currentState = calendar.state('currentDate').getMonth();
-    expect(prevState).toBe(currentState + 1);
+    expect(handleChange).toBeCalled();
 });
 
 test('testNextMonth',() =>{
-    const calendar = mount(<Calendar/>);
+    const handleChange = jest.fn();
+    const calendar = mount(<Calendar handleChange={handleChange}/>);
     const prevButton = calendar.find('.next');
-    const prevState = calendar.state('currentDate').getMonth();
     prevButton.simulate('click');
-    const currentState = calendar.state('currentDate').getMonth();
-    expect(prevState).toBe(currentState - 1);
+    expect(handleChange).toBeCalled();
 });
+
 test('activatingDayInCalendar',() =>{
-    const calendar = mount(<Calendar/>);
-    const day1 = calendar.findWhere(node => node.key() === 'day1');
-    day1.simulate('click');
-    expect(calendar.state().monthDays[0].active).toBe(true);
+    const calendar = mount(<Calendar value={new Date(2018,7,9)}/>);
+    const day9 = calendar.findWhere(node => node.key() === 'day-active9');
+    expect(day9.children().prop('className')).toBe("active");
+});
+test('testClickingDayOnChangeBeingCalled',() =>{
+    const handleChange = jest.fn();
+    const calendar = mount(<Calendar value={new Date(2018,7,11)} handleChange={handleChange}/>);
+    const day9 = calendar.findWhere(node => node.key() === 'day9');
+    day9.simulate('click');
+    expect(handleChange).toBeCalled();
 });
