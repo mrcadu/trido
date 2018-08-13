@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import PropTypes from 'proptypes';
+import PropTypes from 'prop-types';
 
 class Calendar extends Component {
     static daysInMonth(month, year, currentDay) {
@@ -34,10 +34,6 @@ class Calendar extends Component {
         this.prevMonth = this.prevMonth.bind(this);
         this.nextMonth = this.nextMonth.bind(this);
         Calendar.daysInMonth = Calendar.daysInMonth.bind(this);
-        const currentDate = this.props.value;
-        this.state = {
-            monthDays: Calendar.daysInMonth(currentDate.getMonth(), currentDate.getFullYear(),currentDate.getDate())
-        };
     }
 
     prevMonth() {
@@ -88,6 +84,7 @@ class Calendar extends Component {
                                             className="days"
                                             key={"day".concat(day.dia)}>{day.dia}</li>);
                             }
+                            return null;
                         })
                     }
                 </ul>

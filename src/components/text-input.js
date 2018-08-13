@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'proptypes';
+import PropTypes from 'prop-types';
 
 const TextInput = ({name, value, handleChange, placeholder, style, onBlur, onKeyDown}) => {
     return (<input name={name}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'proptypes';
+import PropTypes from 'prop-types';
 import Select from 'react-select';
 import makeAnimated from 'react-select/lib/animated';
 

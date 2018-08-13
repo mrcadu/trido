@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PropTypes from 'proptypes';
+import PropTypes from 'prop-types';
 import TextInput from "./text-input";
 import SelectOne from "./select-one";
 import SelectMany from "./select-many";
@@ -9,21 +9,23 @@ import {reduxForm, Field} from "redux-form";
 
 class TarefaForm extends Component {
     componentWillMount() {
-        if(this.props.tarefa) {
+        if (this.props.tarefa) {
             this.props.initialize({
-                tarefa : this.props.tarefa.tarefa,
-                duracao:this.props.tarefa.duracao,
+                tarefa: this.props.tarefa.tarefa,
+                triade: this.props.tarefa.triade,
+                duracao: this.props.tarefa.duracao,
                 calendar: this.props.tarefa.calendar,
                 papeis: this.props.tarefa.papeis,
-                meta : this.props.tarefa.metas,
+                metas: this.props.tarefa.metas,
                 equilibrio: this.props.tarefa.equilibrio,
             });
         }
-        else{
+        else {
             this.props.initialize({
-                tarefa : "",
-                duracao:"",
-                meta : "",
+                tarefa: "",
+                triade:[],
+                duracao: "",
+                metas: "",
                 calendar: new Date(),
                 papeis: [],
                 equilibrio: []
@@ -66,22 +68,43 @@ class TarefaForm extends Component {
                     </div>
                 </div>
 
-                <div style={{marginBottom: '20px'}}>
-                    <label className="formLabel">Equilíbrio</label>
-                    <Field label="equilibrio"
-                           placeholder="Equilíbrio"
-                           name="equilibrio"
-                           component={props =>
-                               <SelectMany
-                                   value={props.input.value}
-                                   options={[
-                                       {value: 'chocolate', label: 'Chocolate'},
-                                       {value: 'strawberry', label: 'Strawberry'},
-                                       {value: 'vanilla', label: 'Vanilla'}
-                                   ]}
-                                   placeholder="Duração"
-                                   handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}
-                           style={{marginBottom: '20px'}}/>
+                <div style={{width:'100%'}}>
+
+                    <div style={{marginBottom: '20px', width:'45%',float:'right'}}>
+                        <label className="formLabel">Equilíbrio</label>
+                        <Field label="equilibrio"
+                               placeholder="Equilíbrio"
+                               name="equilibrio"
+                               component={props =>
+                                   <SelectMany
+                                       value={props.input.value}
+                                       options={[
+                                           {value: 'Mental', label: 'Mental'},
+                                           {value: 'Físico', label: 'Físico'},
+                                           {value: 'Espiritual', label: 'Espiritual'},
+                                           {value: 'Emocional', label: 'Emocional'}
+                                       ]}
+                                       placeholder="Duração"
+                                       handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}/>
+                    </div>
+
+                    <div style={{marginBottom: '20px', width: '45%'}}>
+                        <label className="formLabel">Tríade</label>
+                        <Field label="triade"
+                               placeholder="Tríade"
+                               name="triade"
+                               component={props =>
+                                   <SelectMany
+                                       value={props.input.value}
+                                       options={[
+                                           {value: 'Importante', label: 'Importante'},
+                                           {value: 'Circunstancial', label: 'Circunstancial'},
+                                           {value: 'Urgente', label: 'Urgente'}
+                                       ]}
+                                       placeholder="Duração"
+                                       handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}/>
+                    </div>
+
                 </div>
 
                 <div style={{marginBottom: '20px'}}>
@@ -92,11 +115,7 @@ class TarefaForm extends Component {
                            component={props =>
                                <SelectOne
                                    value={props.input.value}
-                                   options={[
-                                       {value: 'chocolate', label: 'Chocolate'},
-                                       {value: 'strawberry', label: 'Strawberry'},
-                                       {value: 'vanilla', label: 'Vanilla'}
-                                   ]}
+                                   options={this.props.metas}
                                    placeholder="Duração"
                                    handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}/>
                 </div>
@@ -109,22 +128,19 @@ class TarefaForm extends Component {
                            component={props =>
                                <SelectMany
                                    value={props.input.value}
-                                   options={[
-                                       {value: 'chocolate', label: 'Chocolate'},
-                                       {value: 'strawberry', label: 'Strawberry'},
-                                       {value: 'vanilla', label: 'Vanilla'}
-                                   ]}
+                                   options={this.props.papeis}
                                    placeholder="Duração"
                                    handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}/>
                 </div>
 
-                <div style={{marginBottom: '20px'}}>
+                <div style={{marginBottom: '20px', width: '100%'}}>
                     <Field label="calendar"
                            placeholder="calendar"
                            name="calendar"
                            type="date"
                            component={props =>
                                <Calendar
+                                   style={{width: '30%', margin: '0 auto'}}
                                    value={props.input.value}
                                    handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}
                     />
@@ -145,7 +161,9 @@ class TarefaForm extends Component {
 TarefaForm.propTypes = {
     handleSubmit: PropTypes.func,
     onSubmit: PropTypes.func,
-    tarefa:PropTypes.object
+    metas: PropTypes.array,
+    papeis :PropTypes.array,
+    tarefa: PropTypes.object
 };
 export default reduxForm({
     form: 'addTarefa',
