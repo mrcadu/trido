@@ -8,7 +8,6 @@ Enzyme.configure({adapter: new Adapter()});
 test('testNomeAparecendo', () => {
     let text = 'salvar';
     const button = shallow(<Button label={text}/>);
-    expect(button.type()).toBe('button');
     expect(button.props().children).toBe(text);
 });
 test('testChamaMetodoOnClick', () => {
