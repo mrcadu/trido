@@ -5,6 +5,7 @@ import App from './components/App';
 import {Provider} from "react-redux";
 import {combineReducers, createStore} from 'redux';
 import { reducer as formReducer } from 'redux-form'
+import { BrowserRouter } from 'react-router-dom'
 
 
 const rootReducer = combineReducers({
@@ -14,7 +15,9 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer);
 
 ReactDOM.render(
-    <Provider store={store}>
-        <App/>
-    </Provider>,
+    <BrowserRouter>
+        <Provider store={store}>
+            <App/>
+        </Provider>
+    </BrowserRouter>,
     document.getElementById('root'));
