@@ -1,25 +1,27 @@
-import React,{Component} from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
+import {connect} from 'react-redux'
+import {selectTab} from '../actions/tabsAction'
+import {bindActionCreators} from "redux";
 
-class Tabs extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            currentActiveTab:0
-        }
-    }
-
-    render() {
+const Tabs  = ({children,selectedTab,handleClick, dispatch,selectTab}) => {
         return (
             <div>
-                {this.props.children.map((child) => {
-                    return React.cloneElement(child,{name:"teste",kind:'active'})
+                {children.map((child,index) => {
+                    return React.cloneElement(child, {  name: child.props.name,
+                                                        key:'tab'.concat(index) ,
+                                                        kind: (selectedTab===index ? 'active' : 'inactive') ,
+                                                        onClick:(() => selectTab(index))});
                 })}
             </div>
         );
-    }
-
-}
-Tabs.propTypes ={
 };
-export default Tabs
+function mapStateToProps(state) {
+    return {
+        selectedTab: state.tabsReducer.selectedTab
+    };
+}
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({selectTab},dispatch);
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Tabs);

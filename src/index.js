@@ -3,13 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 import {Provider} from "react-redux";
-import {combineReducers, createStore} from 'redux';
-import { reducer as formReducer } from 'redux-form'
-
-
-const rootReducer = combineReducers({
-    form: formReducer,
-});
+import {createStore} from 'redux';
+import rootReducer from './reducers'
 
 const store = createStore(rootReducer);
 

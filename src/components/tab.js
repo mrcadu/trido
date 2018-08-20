@@ -7,11 +7,9 @@ const styles = {
         color: '#393939',
         cursor: 'pointer',
         marginLeft: '15%',
-        marginTop: '5%',
         fontSize: '30px',
         textAlign: 'center',
         width: '15%',
-        float: 'left',
         borderBottom: '1px solid #808080',
         ':hover': {
             fontSize: '32px',
@@ -24,8 +22,8 @@ const styles = {
     },
     menuContent: {
         width: '65%',
-        marginTop:'3%',
-        float:'right'
+        float:'right',
+        marginTop:'-4%'
     },
     active: {
         fontSize: '32px',
