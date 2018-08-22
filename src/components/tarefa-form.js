@@ -6,6 +6,8 @@ import SelectMany from "./select-many";
 import Calendar from "./calendar";
 import Button from "./button";
 import {reduxForm, Field} from "redux-form";
+import WithTarefaSubmit from "../HOC/withTarefaSubmit";
+import WithMetasAndPapeis from "../HOC/withMetasAndPapeis";
 
 class TarefaForm extends Component {
     componentWillMount() {
@@ -165,6 +167,10 @@ TarefaForm.propTypes = {
     papeis :PropTypes.array,
     tarefa: PropTypes.object
 };
-export default reduxForm({
+let withOptions = WithMetasAndPapeis(TarefaForm);
+let withForm = reduxForm({
     form: 'addTarefa',
-})(TarefaForm);
+})(withOptions);
+let withSubmit = WithTarefaSubmit(withForm);
+
+export default withSubmit;

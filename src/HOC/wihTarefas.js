@@ -1,8 +1,8 @@
 import React,{Component} from 'react'
 import axios from 'axios'
 
-const ListTarefasHoc = ( component ) => {
-  const url = 'http://localhost:3001';
+const WihTarefas = (WrappedComponent ) => {
+  const url = process.env.REACT_APP_FETCH_URL;
 
   class ListaTarefas extends Component {
     constructor(props){
@@ -37,9 +37,9 @@ const ListTarefasHoc = ( component ) => {
       }).then(response => this.setState({tarefas : response} ));
     }
     render(){
-      return(React.cloneElement(component,{tarefas:this.state.tarefas.data,handleClick: this.handleClick}))
+      return < WrappedComponent tarefas={this.state.tarefas.data} handleClick={this.handleClick} {...this.props}/>
     }
   }
   return ListaTarefas;
 };
-export default ListTarefasHoc;
+export default WihTarefas;
