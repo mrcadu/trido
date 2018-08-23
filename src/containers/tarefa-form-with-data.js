@@ -23,18 +23,22 @@ class TarefaFormWithData extends Component {
     }
     componentDidMount(){
         const url = this.props.url;
-        fetch(url.concat("/metas"))
+        fetch(url.concat("/api/metas"))
             .then(response => response.json())
-            .then(response => this.setState({ metas : this.selectJsonConverter(response.data) }));
-        fetch(url.concat("/papeis"))
+            .then(response => this.setState({ metas : this.selectJsonConverter(response) }));
+        fetch(url.concat("/api/papeis"))
             .then(response => response.json())
-            .then(response => this.setState({ papeis : this.selectJsonConverter(response.data) } ));
+            .then(response => this.setState({ papeis : this.selectJsonConverter(response) } ));
     }
     render(){
-        return <TarefaForm papeis={this.state.papeis} metas={this.state.metas}/>
+        return <TarefaForm onSubmit={this.props.onSubmit} papeis={this.state.papeis} metas={this.state.metas}/>
     }
 }
+TarefaFormWithData.defaultProps = {
+    url:'http://localhost:3001'
+};
 TarefaFormWithData.propTypes = {
-    url:PropTypes.string.isRequired
+    url:PropTypes.string.isRequired,
+    onSubmit:PropTypes.func
 };
 export default TarefaFormWithData;

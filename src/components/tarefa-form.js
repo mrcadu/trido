@@ -80,7 +80,7 @@ class TarefaForm extends Component {
                                        value={props.input.value}
                                        options={[
                                            {value: 'Mental', label: 'Mental'},
-                                           {value: 'Físico', label: 'Físico'},
+                                           {value: 'Fisico', label: 'Físico'},
                                            {value: 'Espiritual', label: 'Espiritual'},
                                            {value: 'Emocional', label: 'Emocional'}
                                        ]}
