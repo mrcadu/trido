@@ -1,16 +1,16 @@
 import React from 'react';
-import AddTarefa from "../containers/add-tarefa";
-import ListarTarefas from "./listarTarefas";
 import Tab from "./tab";
 import Tabs from "./tabs";
+import TarefaForm from "./tarefa-form";
+import ListTarefas from "./listTarefas";
 
 const TabsMenu = ({}) => {
     return (<Tabs name="Criar Tarefa">
+        <TarefaForm/>
         <Tab name="Adicionar Tarefa">
-            <AddTarefa url={'http://localhost:3001'}/>
         </Tab>
         <Tab name="listarTarefas">
-            <ListarTarefas/>
+            <ListTarefas/>
         </Tab>
     </Tabs>)
 };
