@@ -1,8 +1,8 @@
 import React from "react";
 import {Switch,Route} from "react-router-dom/";
-import AddTarefa from "../containers/add-tarefa";
-import ListTarefas from './listTarefas';
 import TabsMenu from "./TabsMenu";
+import TarefaForm from "./tarefa-form";
+import ListTarefas from "./listTarefas";
 
 const Main = () => {
 
@@ -10,7 +10,7 @@ const Main = () => {
         <main>
             <Switch>
                 <Route exact path='/' component={TabsMenu}/>
-                <Route exact path='/addTarefa' component={AddTarefa} />
+                <Route exact path='/addTarefa' component={TarefaForm} />
                 <Route exact path='/listTarefas' component={ListTarefas} />
             </Switch>
         </main>)

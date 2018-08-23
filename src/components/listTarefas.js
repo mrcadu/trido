@@ -1,6 +1,6 @@
 import React from 'react';
-import ListTarefasHoc from '../HOC/list-tarefas-hoc';
 import Button from './button';
+import WihTarefas from "../HOC/wihTarefas";
 
 const ListTarefas = ({tarefas, handleClick}) => {
   return (<div>
@@ -14,4 +14,4 @@ const ListTarefas = ({tarefas, handleClick}) => {
   </div>)
 };
 
-export default ListTarefasHoc(<ListTarefas/>);
+export default WihTarefas(ListTarefas);
