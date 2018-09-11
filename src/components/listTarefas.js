@@ -6,7 +6,7 @@ const ListTarefas = ({tarefas, handleClick}) => {
   let diasDaSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
   return (<div>
     {tarefas.map((tarefa) => {
-      return <div>c
+      return <div>
         <h4> {tarefa.nome} </h4>
         <h4> {tarefa.duracao} </h4>
         <h4> {diasDaSemana[new Date(tarefa.data).getDay() + 1]} </h4>
