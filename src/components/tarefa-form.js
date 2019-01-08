@@ -11,23 +11,16 @@ import WithMetasAndPapeis from "../HOC/withMetasAndPapeis";
 
 class TarefaForm extends Component {
     componentWillMount() {
-        if (this.props.tarefa) {
-            this.props.initialize({
-                tarefa: this.props.tarefa.tarefa,
-                triade: this.props.tarefa.triade,
-                duracao: this.props.tarefa.duracao,
-                calendar: this.props.tarefa.calendar,
-                papeis: this.props.tarefa.papeis,
-                metas: this.props.tarefa.metas,
-                equilibrio: this.props.tarefa.equilibrio,
-            });
+        this.setState = this.setState.bind(this);
+        if (this.props.tarefaPrePopulada != null) {
+            this.props.initialize(this.props.tarefaPrePopulada)
         }
-        else {
+        else{
             this.props.initialize({
                 tarefa: "",
-                triade:[],
+                triade: [],
                 duracao: "",
-                metas: "",
+                metas: [],
                 calendar: new Date(),
                 papeis: [],
                 equilibrio: []
@@ -70,9 +63,9 @@ class TarefaForm extends Component {
                     </div>
                 </div>
 
-                <div style={{width:'100%'}}>
+                <div style={{width: '100%'}}>
 
-                    <div style={{marginBottom: '20px', width:'45%',float:'right'}}>
+                    <div style={{marginBottom: '20px', width: '45%', float: 'right'}}>
                         <label className="formLabel">Equilíbrio</label>
                         <Field label="equilibrio"
                                placeholder="Equilíbrio"
@@ -152,6 +145,19 @@ class TarefaForm extends Component {
                         label="Salvar"
                         className="button-save"
                         style={{float: 'right'}}/>
+                <Button type="button" onClick={()=>this.props.load({
+                    "calendar": "2018-09-12T00:00:00.000Z",
+                    "duracao": "\"60m\"",
+                    "equilibrio": [
+                        "Mental"
+                    ],
+                    "metas": [],
+                    "papeis": [],
+                    "tarefa": "\"Ler o Capítulo 5 do livro texto de Cálculo III\"",
+                    "triade": [
+                        "Importante"
+                    ]
+                })}/>
 
                 <Button label="Cancelar" className="button-cancel" style={{float: 'left'}}/>
             </form>
@@ -161,16 +167,19 @@ class TarefaForm extends Component {
 
 
 TarefaForm.propTypes = {
+    tarefaPrePopulada:PropTypes.object,
+    id: PropTypes.string,
     handleSubmit: PropTypes.func,
     onSubmit: PropTypes.func,
     metas: PropTypes.array,
-    papeis :PropTypes.array,
-    tarefa: PropTypes.object
+    papeis: PropTypes.array,
+    tarefa: PropTypes.string
 };
 let withOptions = WithMetasAndPapeis(TarefaForm);
 let withForm = reduxForm({
     form: 'addTarefa',
 })(withOptions);
+
 let withSubmit = WithTarefaSubmit(withForm);
 
 export default withSubmit;

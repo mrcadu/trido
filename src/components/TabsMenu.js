@@ -4,12 +4,12 @@ import Tabs from "./tabs";
 import TarefaForm from "./tarefa-form";
 import ListTarefas from "./listTarefas";
 
-const TabsMenu = ({}) => {
+const TabsMenu = () => {
     return (<Tabs name="Criar Tarefa">
-        <TarefaForm/>
         <Tab name="Adicionar Tarefa">
+            <TarefaForm/>
         </Tab>
-        <Tab name="listarTarefas">
+        <Tab name="Listar Tarefas">
             <ListTarefas/>
         </Tab>
     </Tabs>)

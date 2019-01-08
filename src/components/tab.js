@@ -6,7 +6,6 @@ const styles = {
     menuItem: {
         color: '#393939',
         cursor: 'pointer',
-        marginLeft: '15%',
         fontSize: '30px',
         textAlign: 'center',
         width: '15%',

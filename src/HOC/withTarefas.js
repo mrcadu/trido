@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
-import Link from "react-router-dom/es/Link";
-import TarefaForm from "../components/tarefa-form";
 
-const WihTarefas = (WrappedComponent) => {
+const WithTarefas = (WrappedComponent) => {
     const url = process.env.REACT_APP_FETCH_URL;
 
     class ListaTarefas extends Component {
@@ -48,4 +46,4 @@ const WihTarefas = (WrappedComponent) => {
 
     return ListaTarefas;
 };
-export default WihTarefas;
+export default WithTarefas;
