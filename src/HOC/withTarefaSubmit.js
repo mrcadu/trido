@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-
+import TarefaBancoConverter from '../singleton/tarefaBancoConverter'
 const WithTarefaSubmit = (WrappedComponent) => {
 
     class TarefaSubmit extends React.Component {
@@ -10,26 +10,9 @@ const WithTarefaSubmit = (WrappedComponent) => {
         }
         onSubmit (formData){
             const newId = new Date().getTime().toString();
-            const triadeConverter = (triade) => {
-                return {
-                    'Circunstancial': triade.filter(tr => tr.value === 'Circunstancial').length > 0 ? 1 : 0,
-                    'Importante': triade.filter(tr => tr.value === 'Importante').length > 0 ? 1 : 0,
-                    'Urgente': triade.filter(tr => tr.value === 'Urgente').length > 0 ? 1 : 0,
-                    'id': newId,
-                };
-            };
-            const equilibrioConverter = (equilibrio) => {
-                return {
-                    'Mental': equilibrio.filter(eq => eq.value === 'Mental').length > 0 ? 1 : 0,
-                    'Fisico': equilibrio.filter(eq => eq.value === 'Fisico').length > 0 ? 1 : 0,
-                    'Espiritual': equilibrio.filter(eq => eq.value === 'Espiritual').length > 0 ? 1 : 0,
-                    'Emocional': equilibrio.filter(eq => eq.value === 'Emocional').length > 0 ? 1 : 0,
-                    'id': newId,
-                };
-            };
             const url = process.env.REACT_APP_FETCH_URL;
-            const equilibrioData = equilibrioConverter(formData.equilibrio);
-            const triadeData = triadeConverter(formData.triade);
+            const equilibrioData = TarefaBancoConverter.equilibrioConverter(formData.equilibrio,newId);
+            const triadeData = TarefaBancoConverter.triadeConverter(formData.triade,newId);
             let idMetas = new Map();
             let idPapeis = new Map();
 
@@ -57,6 +40,7 @@ const WithTarefaSubmit = (WrappedComponent) => {
 
             axios.request({
                 method: 'post',
+                //  /api/tarefas/1536685124483?filter={"include":["metas","papeis","equilibrioId","triade"]}
                 url: url.concat('/api/tarefas'),
                 data: tarefaData,
             }).then(response => console.log(response)).finally(() => {
@@ -85,8 +69,6 @@ const WithTarefaSubmit = (WrappedComponent) => {
                     });
                 }
             );
-
-            alert(JSON.stringify(formData));
         };
         render() {
             return (<WrappedComponent onSubmit={this.onSubmit} {...this.props}/>);

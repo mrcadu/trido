@@ -11,7 +11,6 @@ import WithMetasAndPapeis from "../HOC/withMetasAndPapeis";
 
 class TarefaForm extends Component {
     componentWillMount() {
-        this.setState = this.setState.bind(this);
         if (this.props.tarefaPrePopulada != null) {
             this.props.initialize(this.props.tarefaPrePopulada)
         }

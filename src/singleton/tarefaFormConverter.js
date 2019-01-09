@@ -27,7 +27,10 @@ class tarefaFormConverter {
         let equilibriosSelecionados = [];
         for (const equilibrio in equilibrios) {
             if (equilibrios.hasOwnProperty(equilibrio) && equilibrios[equilibrio] === true) {
-                equilibriosSelecionados.push(equilibrio);
+                equilibriosSelecionados.push({
+                    label:equilibrio,
+                    value:equilibrio
+                });
             }
         }
         return equilibriosSelecionados;
@@ -37,7 +40,10 @@ class tarefaFormConverter {
         let triadesSelecionadas = [];
         for (const triade in triades) {
             if (triades.hasOwnProperty(triade) && triades[triade] === true) {
-                triadesSelecionadas.push(triade);
+                triadesSelecionadas.push({
+                    label:triade,
+                    value:triade
+                });
             }
         }
         return triadesSelecionadas;

@@ -2,10 +2,13 @@ import TarefaFormConverter from "../singleton/tarefaFormConverter";
 import {Component} from "react";
 import TarefaForm from "./tarefa-form"
 import React from "react";
+import TarefaBancoConverter from '../singleton/tarefaBancoConverter'
+import axios from "axios";
 
 class PopulatedForm extends Component {
     constructor(props) {
         super(props);
+        this.onSubmit = this.onSubmit.bind(this);
         this.state = {
             tarefaPrePopulada:{
                 tarefa: "",
@@ -17,13 +20,37 @@ class PopulatedForm extends Component {
                 equilibrio: []}
         };
     }
-
+    onSubmit = (formData) =>{
+        const tarefaAtual  = this.state.tarefaPrePopulada;
+        const equilibrioAtual = TarefaBancoConverter.equilibrioConverter(tarefaAtual.equilibrio);
+        const triadeAtual = TarefaBancoConverter.triadeConverter(tarefaAtual.triade);
+        const metasAtuais = TarefaBancoConverter.metasConverter(tarefaAtual.metas);
+        const papeisAtuais = TarefaBancoConverter.papeisConverter(tarefaAtual.papeis);
+        const tarefaFinal = {
+            id: this.props.match.params.tarefaId,
+            nome: formData.tarefa,
+            duracao: formData.duracao,
+            data: formData.calendar,
+            equilibrioId: equilibrioAtual,
+            metas: metasAtuais,
+            papeis: papeisAtuais,
+            triade: triadeAtual
+        };
+        const filtroTarefaCompleta = '?filter={"include":["metas","papeis","equilibrioId","triade"]}';
+        axios.request({
+            method: 'post',
+            url: url.concat("/api/tarefas/").concat(id).concat(filtroTarefaCompleta),
+            data:tarefaFinal
+        }).then(()=>{return null});
+    };
     componentWillMount() {
         const id = this.props.match.params.tarefaId;
         TarefaFormConverter.converter(id,(tarefaConvertida) => this.setState({tarefaPrePopulada: tarefaConvertida}));
     }
     render() {
-        return (<TarefaForm tarefaPrePopulada={this.state.tarefaPrePopulada}/>)
+        return ( this.state.tarefaPrePopulada.tarefa !== "" ? <TarefaForm onSubmit = {(formData) => this.onSubmit(formData)} enableReinitialize={true} initialized={false} tarefaPrePopulada={this.state.tarefaPrePopulada}/>: (<h1>carregando</h1>)
+
+        )
     }
 }
 export default PopulatedForm;
