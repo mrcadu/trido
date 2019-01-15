@@ -36,7 +36,7 @@ class tarefaBancoConverter {
             if(papeis.hasOwnProperty(papel)) {
                 let papelAtual = {
                     id: id,
-                    nome: meta.value
+                    nome: papel.value
                 };
                 papeisConvertidos.push(papelAtual);
             }

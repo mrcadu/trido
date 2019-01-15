@@ -26,21 +26,26 @@ class PopulatedForm extends Component {
         const triadeAtual = TarefaBancoConverter.triadeConverter(tarefaAtual.triade);
         const metasAtuais = TarefaBancoConverter.metasConverter(tarefaAtual.metas);
         const papeisAtuais = TarefaBancoConverter.papeisConverter(tarefaAtual.papeis);
+        const id = this.props.match.params.tarefaId;
+        const url = process.env.REACT_APP_FETCH_URL;
         const tarefaFinal = {
-            id: this.props.match.params.tarefaId,
-            nome: formData.tarefa,
-            duracao: formData.duracao,
-            data: formData.calendar,
-            equilibrioId: equilibrioAtual,
+            tarefa:{
+                id: id,
+                nome: formData.tarefa,
+                duracao: formData.duracao,
+                data: formData.calendar,
+                equilibrioId: id,
+                triadeId:id
+            },
+            equilibrio : equilibrioAtual,
             metas: metasAtuais,
             papeis: papeisAtuais,
             triade: triadeAtual
         };
-        const filtroTarefaCompleta = '?filter={"include":["metas","papeis","equilibrioId","triade"]}';
         axios.request({
-            method: 'post',
-            url: url.concat("/api/tarefas/").concat(id).concat(filtroTarefaCompleta),
-            data:tarefaFinal
+            method: 'put',
+            url: url.concat("/api/tarefas/").concat(id),
+            data:tarefaFinal.tarefa
         }).then(()=>{return null});
     };
     componentWillMount() {
