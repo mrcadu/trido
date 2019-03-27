@@ -23,7 +23,7 @@ const styles = {
     menuContent: {
         width: '65%',
         float:'right',
-        marginTop:'-4%'
+        top:0,
     },
     active: {
         fontSize: '32px',

@@ -142,7 +142,7 @@ class TarefaForm extends Component {
                            type="date"
                            component={props =>
                                <Calendar
-                                   style={{width: '30%', margin: '0 auto'}}
+                                   style={{width: '70%', margin: '0 auto'}}
                                    value={props.input.value}
                                    handleChange={(selectedOption) => props.input.onChange(selectedOption)}/>}
                     />
