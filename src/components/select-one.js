@@ -14,7 +14,7 @@ class SelectOne extends Component{
 }
 SelectOne.propTypes = {
     options: PropTypes.array,
-    value:PropTypes.string,
+    value:PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
     handleChange:PropTypes.func
 };
 export default SelectOne;

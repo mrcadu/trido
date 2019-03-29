@@ -6,7 +6,6 @@ const styles = {
     menuItem: {
         color: '#393939',
         cursor: 'pointer',
-        marginLeft: '15%',
         fontSize: '30px',
         textAlign: 'center',
         width: '15%',
@@ -46,7 +45,7 @@ const Tab = ({name, onClick,children,kind}) => {
 Tab.propTypes = {
     name: PropTypes.string,
     onClick: PropTypes.func,
-    kind : PropTypes.oneOf('active')
+    kind : PropTypes.oneOf(['active','inactive'])
 };
 
 export default Radium(Tab);
