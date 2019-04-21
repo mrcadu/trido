@@ -25,7 +25,6 @@ class PopulatedForm extends Component {
     onSubmit = (formData) => {
         const equilibrioAtual = TarefaBancoConverter.equilibrioConverter(formData.equilibrio);
         const triadeAtual = TarefaBancoConverter.triadeConverter(formData.triade);
-        const metasAtuais = TarefaBancoConverter.metasConverter(formData.metas);
         const papeisAtuais = TarefaBancoConverter.papeisConverter(formData.papeis);
         const idPapeis = new Map();
         const idMetas = new Map();

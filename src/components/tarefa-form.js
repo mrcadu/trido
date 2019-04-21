@@ -56,7 +56,7 @@ class TarefaForm extends Component {
                                component={props =>
                                    <TextInput
                                        value={props.input.value}
-                                       handleChange={param => props.input.onChange(param.target.value)}
+                                       handleChan ge={param => props.input.onChange(param.target.value)}
                                        placeholder="Duração"/>}
                                type="text"/>
                     </div>

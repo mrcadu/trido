@@ -4,7 +4,7 @@ class tarefaFormConverter {
         let tarefaConvertida;
         let tarefa = {};
         const url = process.env.REACT_APP_FETCH_URL;
-        const filtroTarefaCompleta = '?filter={"include":["metas","papeis","equilibrioId","triade"]}';
+        const filtroTarefaCompleta = '?filter={"include":["metas","papeis","equilibrios","triade"]}';
         await axios.request({
             method: 'get',
             url: url.concat("/api/tarefas/").concat(id).concat(filtroTarefaCompleta)
@@ -13,7 +13,7 @@ class tarefaFormConverter {
             tarefaConvertida = {
                 calendar: new Date(tarefa.data),
                 duracao: tarefa.duracao,
-                equilibrio: this.equilibrioFormConverter(tarefa.equilibrioId),
+                equilibrio: this.equilibrioFormConverter(tarefa.equilibrios),
                 metas: this.metasFormConverter(tarefa.metas),
                 papeis: this.papeisFormConverter(tarefa.papeis),
                 tarefa: tarefa.nome,
