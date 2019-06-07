@@ -16,27 +16,33 @@ class TarefaForm extends Component {
         }
         else{
             this.props.initialize({
-                tarefa: "",
+                nome: "",
+                equilibrio: [],
                 triade: [],
-                duracao: "",
+                statusTarefa: {
+                    "id": 1,
+                    "nome": "ativa",
+                    "codigo": "ATV"
+                },
                 metas: [],
-                calendar: new Date(),
                 papeis: [],
-                equilibrio: []
+                duracao: "",
+                data:new Date(),
+                updatedAt:new Date()
             });
         }
     }
 
     render() {
         return (
-            <form onSubmit={this.props.handleSubmit}
+            <form onSubmit={this.props.onSubmit(this.props.metas,this.props.papeis)}
                   style={{margin: '20px'}}>
 
                 <div style={{marginBottom: '20px'}}>
                     <label className="formLabel">Tarefa</label>
                     <div>
-                        <Field label="tarefa"
-                               name="tarefa"
+                        <Field label="nome"
+                               name="nome"
                                component={props =>
                                    <TextInput
                                        value={props.input.value}
@@ -56,7 +62,7 @@ class TarefaForm extends Component {
                                component={props =>
                                    <TextInput
                                        value={props.input.value}
-                                       handleChan ge={param => props.input.onChange(param.target.value)}
+                                       handleChange={param => props.input.onChange(param.target.value)}
                                        placeholder="Duração"/>}
                                type="text"/>
                     </div>
@@ -88,7 +94,7 @@ class TarefaForm extends Component {
                                placeholder="Tríade"
                                name="triade"
                                component={props =>
-                                   <SelectMany
+                                   <SelectOne
                                        value={props.input.value}
                                        options={[
                                            {value: 'Importante', label: 'Importante'},
@@ -107,7 +113,7 @@ class TarefaForm extends Component {
                            placeholder="Metas"
                            name="metas"
                            component={props =>
-                               <SelectOne
+                               <SelectMany
                                    value={props.input.value}
                                    options={this.props.metas}
                                    placeholder="Duração"
@@ -128,9 +134,9 @@ class TarefaForm extends Component {
                 </div>
 
                 <div style={{marginBottom: '20px', width: '100%'}}>
-                    <Field label="calendar"
+                    <Field label="data"
                            placeholder="calendar"
-                           name="calendar"
+                           name="data"
                            type="date"
                            component={props =>
                                <Calendar
@@ -156,10 +162,15 @@ TarefaForm.propTypes = {
     tarefaPrePopulada:PropTypes.object,
     id: PropTypes.string,
     handleSubmit: PropTypes.func,
-    onSubmit: PropTypes.func,
+    nome: PropTypes.string,
+    equilibrio: PropTypes.array,
+    triade: PropTypes.object,
+    statusTarefa: PropTypes.object,
     metas: PropTypes.array,
     papeis: PropTypes.array,
-    tarefa: PropTypes.string
+    duracao: PropTypes.string,
+    data:PropTypes.instanceOf(Date),
+    updatedAt:PropTypes.instanceOf(Date)
 };
 let withOptions = WithMetasAndPapeis(TarefaForm);
 let withForm = reduxForm({

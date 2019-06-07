@@ -25,10 +25,10 @@ const WithMetasAndPapeis = (WrappedComponent ) => {
 
         componentDidMount() {
             const url = process.env.REACT_APP_FETCH_URL;
-            fetch(url.concat("/api/metas"))
+            fetch(url.concat("/metas"))
                 .then(response => response.json())
                 .then(response => this.setState({metas: this.selectJsonConverter(response)}));
-            fetch(url.concat("/api/papeis"))
+            fetch(url.concat("/papeis"))
                 .then(response => response.json())
                 .then(response => this.setState({papeis: this.selectJsonConverter(response)}));
         }
