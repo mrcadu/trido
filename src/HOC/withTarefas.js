@@ -7,7 +7,6 @@ const WithTarefas = (WrappedComponent) => {
     class ListaTarefas extends Component {
         constructor(props) {
             super(props);
-            this.handleClick = this.handleClick.bind(this);
             this.state = {
                 tarefas: {
                     data: []

@@ -33,23 +33,38 @@ class TarefaForm extends Component {
         }
     }
 
+    TextInputTarefa = (props) => {
+        return(
+        <TextInput
+            autoFocus
+            value={props.input.value}
+            handleChange={(param) => {
+                props.input.onChange(param.target.value)
+            }}
+            placeholder="Tarefa"/>)
+    };
+    TextInputDuracao = (props) => {
+        return(
+            <TextInput
+                value={props.input.value}
+                handleChange={(param) => {
+                    props.input.onChange(param.target.value)
+                }}
+                placeholder="Duracao"/>)
+    };
+
     render() {
         return (
-            <form onSubmit={this.props.onSubmit(this.props.metas,this.props.papeis)}
-                  style={{margin: '20px'}}>
+            <form onSubmit={this.props.handleSubmit}>
 
                 <div style={{marginBottom: '20px'}}>
                     <label className="formLabel">Tarefa</label>
                     <div>
                         <Field label="nome"
                                name="nome"
-                               component={props =>
-                                   <TextInput
-                                       value={props.input.value}
-                                       handleChange={param => props.input.onChange(param.target.value)}
-                                       placeholder="Tarefa"/>}
-                               type="text"
-                               className="formElement"/>
+                               placeholder="nome"
+                               component={this.TextInputTarefa}
+                               type="text"/>
                     </div>
                 </div>
 
@@ -57,13 +72,9 @@ class TarefaForm extends Component {
                     <label className="formLabel">Duração</label>
                     <div>
                         <Field label="duracao"
-                               placeholder="Duração"
                                name="duracao"
-                               component={props =>
-                                   <TextInput
-                                       value={props.input.value}
-                                       handleChange={param => props.input.onChange(param.target.value)}
-                                       placeholder="Duração"/>}
+                               placeholder="duracao"
+                               component={this.TextInputDuracao}
                                type="text"/>
                     </div>
                 </div>
@@ -150,6 +161,7 @@ class TarefaForm extends Component {
                         label="Salvar"
                         className="button-save"
                         style={{float: 'right'}}/>
+                        <Button onClick={this.focusTextInput} label="focar"/>
 
                 <Button label="Cancelar" className="button-cancel" style={{float: 'left'}}/>
             </form>
@@ -175,6 +187,7 @@ TarefaForm.propTypes = {
 let withOptions = WithMetasAndPapeis(TarefaForm);
 let withForm = reduxForm({
     form: 'addTarefa',
+    touchOnBlur:true
 })(withOptions);
 
 let withSubmit = WithTarefaSubmit(withForm);

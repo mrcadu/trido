@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TextInput = ({name, value, handleChange, placeholder, style, onBlur, onKeyDown}) => {
+const TextInput = ({name, value, handleChange, placeholder, style, onBlur, onKeyDown,autoFocus}) => {
     return (<input name={name}
                    type="text"
-                   autoFocus
+                   autoFocus={autoFocus}
                    placeholder={placeholder}
                    value={value}
                    onBlur={onBlur}

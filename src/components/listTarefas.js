@@ -7,7 +7,7 @@ const ListTarefas = ({tarefas}) => {
     let diasDaSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
     return (<div>
         {tarefas.map((tarefa) => {
-            return <div key={tarefa.nome}>
+            return <div key={tarefa.id}>
                 <Link to= {`/editForm/${tarefa.id}`} params={{tarefa:tarefa}} label="editarTarefa">{tarefa.nome}</Link>
                 <h4> {tarefa.duracao} </h4>
                 <h4> {diasDaSemana[new Date(tarefa.data).getDay() + 1]} </h4>

@@ -4,24 +4,22 @@ class tarefaFormConverter {
         let tarefaConvertida;
         let tarefa = {};
         const url = process.env.REACT_APP_FETCH_URL;
-        const filtroTarefaCompleta = '?filter={"include":["metas","papeis","equilibrios","triade"]}';
         await axios.request({
             method: 'get',
-            url: url.concat("/api/tarefas/").concat(id).concat(filtroTarefaCompleta)
+            url: url.concat("/tarefas/").concat(id)
         }).then((response) => {
             tarefa = response.data;
             tarefaConvertida = {
-                calendar: new Date(tarefa.data),
+                data: new Date(tarefa.data),
                 duracao: tarefa.duracao,
-                equilibrio: this.equilibrioFormConverter(tarefa.equilibrios),
+                equilibrio: this.equilibrioFormConverter(tarefa.equilibrio),
                 metas: this.metasFormConverter(tarefa.metas),
                 papeis: this.papeisFormConverter(tarefa.papeis),
-                tarefa: tarefa.nome,
+                nome: tarefa.nome,
                 triade: this.triadeFormConverter(tarefa.triade),
             };
             funcao(tarefaConvertida);
         });
-
     }
     static equilibrioFormConverter(equilibrios) {
         let equilibriosSelecionados = [];

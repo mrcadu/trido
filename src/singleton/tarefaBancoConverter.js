@@ -1,12 +1,24 @@
 class tarefaBancoConverter {
-    static triadeConverter = (triade) => {
+    constructor(metasIdMap,papeisIdMap){
+        let metasId = new Map();
+        let papeisId = new Map();
+        for(let i = 0;i< metasIdMap.length;i++){
+            metasId.set(metasIdMap[i].value,i+1)
+        }
+        for(let i = 0;i< papeisIdMap.length;i++){
+            papeisId.set(papeisIdMap[i].value,i+1)
+        }
+        this.metasId = metasId;
+        this.papeisId = papeisId;
+    }
+    triadeConverter = (triade) => {
         return {
             'Circunstancial': triade.filter(tr => tr.value === 'Circunstancial').length > 0 ? 1 : 0,
             'Importante': triade.filter(tr => tr.value === 'Importante').length > 0 ? 1 : 0,
             'Urgente': triade.filter(tr => tr.value === 'Urgente').length > 0 ? 1 : 0,
         };
     };
-    static equilibrioConverter = (equilibrio) => {
+    equilibrioConverter = (equilibrio) => {
         return {
             'Mental': equilibrio.filter(eq => eq.value === 'Mental').length > 0 ? 1 : 0,
             'Fisico': equilibrio.filter(eq => eq.value === 'Fisico').length > 0 ? 1 : 0,
@@ -14,27 +26,25 @@ class tarefaBancoConverter {
             'Emocional': equilibrio.filter(eq => eq.value === 'Emocional').length > 0 ? 1 : 0,
         };
     };
-    static metasConverter = (metas) => {
-        const metaIdMap = {
-
-        };
+    metasConverter = (metas) => {
         const metaConvertida = [];
         for(const meta in metas){
             if(metas.hasOwnProperty(meta)) {
                 let metaAtual = {
-                    nome: meta.value
+                    id:this.metasId.get(metas[meta].value),
+                    nome: metas[meta].value
                 };
                 metaConvertida.push(metaAtual);
             }
         }
         return metaConvertida;
     };
-    static papeisConverter = (papeis,id) => {
+    papeisConverter = (papeis) => {
         const papeisConvertidos = [];
         for(const papel in papeis){
             if(papeis.hasOwnProperty(papel)) {
                 let papelAtual = {
-                    id: id,
+                    id:this.papeisId.get(papeis[papel].value),
                     nome: papeis[papel].value
                 };
                 papeisConvertidos.push(papelAtual);

@@ -4,6 +4,7 @@ import TarefaForm from "./tarefa-form";
 import React from "react";
 import TarefaBancoConverter from '../singleton/tarefaBancoConverter';
 import axios from "axios";
+import WithMetasAndPapeis from "../HOC/withMetasAndPapeis";
 
 class PopulatedForm extends Component {
     constructor(props) {
@@ -23,94 +24,38 @@ class PopulatedForm extends Component {
     }
 
     onSubmit = (formData) => {
-        const equilibrioAtual = TarefaBancoConverter.equilibrioConverter(formData.equilibrio);
-        const triadeAtual = TarefaBancoConverter.triadeConverter(formData.triade);
-        const papeisAtuais = TarefaBancoConverter.papeisConverter(formData.papeis);
-        const idPapeis = new Map();
-        const idMetas = new Map();
+        const tarefaBancoConverter = new TarefaBancoConverter(this.props.metas,this.props.papeis);
+        const equilibrioAtual = tarefaBancoConverter.equilibrioConverter(formData.equilibrio);
+        const triadeAtual = tarefaBancoConverter.triadeConverter(formData.triade);
+        const papeisAtuais = tarefaBancoConverter.papeisConverter(formData.papeis);
+        const metasAtuais =  tarefaBancoConverter.metasConverter(formData.metas);
         const id = this.props.match.params.tarefaId;
         const url = process.env.REACT_APP_FETCH_URL;
-        const tarefaFinal = {
-            tarefa: {
-                id: id,
-                nome: formData.tarefa,
-                duracao: formData.duracao,
-                data: formData.calendar,
-                equilibrioId: id,
-                triadeId: id,
-                statusId: "9b270ae6a421",
+
+        const tarefaData = {
+            'id':id,
+            'nome': `${formData.nome}`,
+            'duracao': `${formData.duracao}`,
+            'data': formData.data,
+            'equilibrio': equilibrioAtual,
+            'triade': triadeAtual,
+            "statusTarefa": {
+                "id": 1,
+                "nome": "ativa",
+                "codigo": "ATV"
             },
-            equilibrio: equilibrioAtual,
-            metas: formData.metas,
-            papeis: papeisAtuais,
-            triade: triadeAtual
+            'metas':metasAtuais,
+            'papeis':papeisAtuais,
+            'updatedAt':formData.data,
         };
         axios.request({
-            method: 'put',
-            url: url.concat("/api/tarefas/"),
-            data: tarefaFinal.tarefa
+            method: 'post',
+            url: url.concat("/tarefas/"),
+            data: tarefaData
         }).then((response) => {
             console.log(response);
-        });
-        axios.request({
-            method: 'put',
-            url: url.concat("/api/tarefas/").concat(id).concat("/equilibrioId"),
-            data: tarefaFinal.equilibrio
-        }).then((response) => {
-            console.log(response);
-        });
-        axios.request({
-            method: 'put',
-            url: url.concat("/api/tarefas/").concat(id).concat("/triade"),
-            data: tarefaFinal.triade
-        }).then((response) => {
-            console.log(response);
-        });
-        axios.request({
-            method: 'get',
-            url: url.concat('/api/papeis'),
-        }).then(response => response.data.forEach((papel) => {
-            idPapeis.set(papel.nome, papel.id);
-        })).then(() => {
-            axios.request({
-                method: 'delete',
-                url: url.concat("/api/tarefas/").concat(id).concat("/papeis"),
-                data: {id: id}
-            }).then(() => {
-                tarefaFinal.papeis.forEach((papel) => {
-                    axios.request({
-                        method: 'put',
-                        url: url.concat('/api/tarefas/'.concat(id).concat('/papeis/rel/'.concat(idPapeis.get(papel.nome)))),
-                        data:{
-                            tarefasId:id,
-                            papeisId:idPapeis.get(papel)
-                        }
-                    });
-                });
-            });
         });
 
-        axios.request({
-            method: 'get',
-            url: url.concat('/api/metas'),
-        }).then(response => response.data.forEach((meta) => {
-            idMetas.set(meta.nome, meta.id);
-        })).then(() => {
-            axios.request({
-                method: 'delete',
-                url: url.concat("/api/tarefas/").concat(id).concat("/metas"),
-                data: {id: id}
-            }).finally(() => {
-                axios.request({
-                    method: 'put',
-                    url: url.concat('/api/tarefas/'.concat(id).concat('/metas/rel/'.concat(idMetas.get(formData.metas.value)))),
-                    data:{
-                        tarefasId:id,
-                        metasId:idMetas.get(formData.metas.value)
-                    }
-                });
-            });
-        });
     };
 
     componentWillMount() {
@@ -127,4 +72,4 @@ class PopulatedForm extends Component {
     }
 }
 
-export default PopulatedForm;
+export default WithMetasAndPapeis(PopulatedForm);
