@@ -51,7 +51,7 @@ class PopulatedForm extends Component {
         axios.request({
             method: 'post',
             url: url.concat("/tarefas/"),
-            data: tarefaData
+            data: tarefaData,
         }).then((response) => {
             console.log(response);
         });
@@ -60,7 +60,8 @@ class PopulatedForm extends Component {
 
     componentWillMount() {
         const id = this.props.match.params.tarefaId;
-        TarefaFormConverter.converter(id, (tarefaConvertida) => this.setState({tarefaPrePopulada: tarefaConvertida}));
+        TarefaFormConverter.converter(id, (tarefaConvertida) => this.setState({tarefaPrePopulada: tarefaConvertida})
+        );
     }
 
     render() {

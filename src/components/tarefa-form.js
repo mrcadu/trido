@@ -161,7 +161,6 @@ class TarefaForm extends Component {
                         label="Salvar"
                         className="button-save"
                         style={{float: 'right'}}/>
-                        <Button onClick={this.focusTextInput} label="focar"/>
 
                 <Button label="Cancelar" className="button-cancel" style={{float: 'left'}}/>
             </form>

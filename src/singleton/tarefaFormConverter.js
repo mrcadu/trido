@@ -26,8 +26,8 @@ class tarefaFormConverter {
         for (const equilibrio in equilibrios) {
             if (equilibrios.hasOwnProperty(equilibrio) && equilibrios[equilibrio] === true) {
                 equilibriosSelecionados.push({
-                    label:equilibrio,
-                    value:equilibrio
+                    label:equilibrio.charAt(0).toUpperCase() + equilibrio.slice(1),
+                    value:equilibrio.charAt(0).toUpperCase() + equilibrio.slice(1)
                 });
             }
         }
@@ -35,16 +35,16 @@ class tarefaFormConverter {
     }
 
     static triadeFormConverter(triades) {
-        let triadesSelecionadas = [];
+        let triadeSelecionada = {};
         for (const triade in triades) {
             if (triades.hasOwnProperty(triade) && triades[triade] === true) {
-                triadesSelecionadas.push({
-                    label:triade,
-                    value:triade
-                });
+                triadeSelecionada = {
+                    label:triade.charAt(0).toUpperCase() + triade.slice(1),
+                    value:triade.charAt(0).toUpperCase() + triade.slice(1)
+                };
             }
         }
-        return triadesSelecionadas;
+        return triadeSelecionada;
     }
 
     static metasFormConverter(metas) {

@@ -17,10 +17,10 @@ test('testeConvertendoEquilibrio',()=>{
     let equilibrio=
     {
         "id":"1534740683145",
-        "Mental":true,
-        "Fisico":false,
-        "Espiritual":false,
-        "Emocional":false
+        "mental":true,
+        "fisico":false,
+        "espiritual":false,
+        "emocional":false
     };
     const tarefaConvertidaEsperada = ["Mental"];
     const tarefaConvertida = TarefaFormConverter.equilibrioFormConverter(equilibrio);

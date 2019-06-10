@@ -13,17 +13,17 @@ class tarefaBancoConverter {
     }
     triadeConverter = (triade) => {
         return {
-            'Circunstancial': triade.filter(tr => tr.value === 'Circunstancial').length > 0 ? 1 : 0,
-            'Importante': triade.filter(tr => tr.value === 'Importante').length > 0 ? 1 : 0,
-            'Urgente': triade.filter(tr => tr.value === 'Urgente').length > 0 ? 1 : 0,
+            'circunstancial': triade.value === 'Circunstancial',
+            'importante': triade.value === 'Importante',
+            'urgente': triade.value === 'Urgente',
         };
     };
     equilibrioConverter = (equilibrio) => {
         return {
-            'Mental': equilibrio.filter(eq => eq.value === 'Mental').length > 0 ? 1 : 0,
-            'Fisico': equilibrio.filter(eq => eq.value === 'Fisico').length > 0 ? 1 : 0,
-            'Espiritual': equilibrio.filter(eq => eq.value === 'Espiritual').length > 0 ? 1 : 0,
-            'Emocional': equilibrio.filter(eq => eq.value === 'Emocional').length > 0 ? 1 : 0,
+            'mental': equilibrio.filter(eq => eq.value === 'Mental').length > 0,
+            'fisico': equilibrio.filter(eq => eq.value === 'Fisico').length > 0,
+            'espiritual': equilibrio.filter(eq => eq.value === 'Espiritual').length > 0 ,
+            'emocional': equilibrio.filter(eq => eq.value === 'Emocional').length > 0 ,
         };
     };
     metasConverter = (metas) => {
