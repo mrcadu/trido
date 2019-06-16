@@ -13,7 +13,12 @@ const WithTarefas = (WrappedComponent) => {
                 }
             };
         }
-
+        rerender(){
+            axios.request({
+                method: 'get',
+                url: url.concat('/tarefas/active'),
+            }).then(response => this.setState({tarefas: response}));
+        }
         componentDidMount() {
             axios.request({
                 method: 'get',
@@ -22,7 +27,7 @@ const WithTarefas = (WrappedComponent) => {
         }
 
         render() {
-            return < WrappedComponent tarefas={this.state.tarefas.data} {...this.props}/>;
+            return < WrappedComponent rerender={() => {this.rerender()}} tarefas={this.state.tarefas.data} {...this.props}/>;
         }
     }
 
