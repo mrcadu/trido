@@ -10,7 +10,7 @@ const TabsMenu = () => {
             <Tab name="Adicionar Tarefa">
                 <TarefaForm/>
             </Tab>
-            <Tab name="listarTarefas">
+            <Tab name="Listar Tarefas">
                 <ListTarefas/>
             </Tab>
         </Tabs>);
