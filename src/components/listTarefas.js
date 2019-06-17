@@ -14,14 +14,23 @@ const ListTarefas = ({tarefas,rerender}) => {
             marginBottom: '20px',
             color:'#333333'
         },
-        botao:{
+        botaoExcluir:{
             background: "url(trash.png)",
             backgroundSize:'cover',
             float:'right',
             backgroundColor:'red',
             height:'20px',
             width:'20px',
-
+            marginRight:'5px'
+        },
+        botaoConfirmar:{
+            background: 'url("confirm.png")',
+            backgroundSize:'cover',
+            float:'right',
+            backgroundColor:'white',
+            height:'20px',
+            width:'20px',
+            marginRight:'5px'
         },
         link:{
             textDecoration:'none',
@@ -38,15 +47,24 @@ const ListTarefas = ({tarefas,rerender}) => {
         axios.delete(url.concat('/tarefas/' + id)).then(
             () => {
                 rerender();
-                console.log('{tarefa com o id ' + id + ' foi removida')
+                console.log('tarefa com o id ' + id + ' foi removida')
+            }
+        );
+    };
+    const concluirTarefa = (id) => {
+        axios.put(url.concat('/tarefas/' + id + '/complete')).then(
+            () => {
+                rerender();
+                console.log('tarefa com o id ' + id + ' foi concluida')
             }
         );
     };
     return (<div>
         {tarefas.map((tarefa) => {
             return <div style={style.tarefas} key={tarefa.id}>
-                <Link to= {`/editForm/${tarefa.id}`} params={{tarefa:tarefa}} label="editarTarefa">{tarefa.nome}[{tarefa.duracao}]</Link>
-                <Button onClick={() => removerTarefa(tarefa.id)} style={style.botao}/>
+                <Link style={style.link} to= {`/editForm/${tarefa.id}`} params={{tarefa:tarefa}} label="editarTarefa">{tarefa.nome}[{tarefa.duracao}]</Link>
+                <Button onClick={() => removerTarefa(tarefa.id)} style={style.botaoExcluir}/>
+                <Button onClick={() => concluirTarefa(tarefa.id)} style={style.botaoConfirmar}/>
                 <h4 style={style.texto}> {diasDaSemana[new Date(tarefa.data).getDay() + 1]} </h4>
             </div>;
         })}
