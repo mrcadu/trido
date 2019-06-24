@@ -53,8 +53,14 @@ const WithTarefaSubmit = (WrappedComponent) => {
     function mapDispatchToProps(dispatch) {
         return bindActionCreators({load}, dispatch);
     }
+    function mapStateToProps(state) {
+        return {
+            loading: state.loadingReducer.loading
+        };
+    }
     const withMetasAndPapeis = WithMetasAndPapeis(TarefaSubmit);
-    return connect(mapDispatchToProps)(withMetasAndPapeis);
+    return connect(mapStateToProps,mapDispatchToProps)(withMetasAndPapeis);
+
 };
 
 export default WithTarefaSubmit;

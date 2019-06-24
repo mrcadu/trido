@@ -6,6 +6,7 @@ import ListTarefas from "./listTarefas";
 import PopulatedForm from "./populatedForm"
 import {connect} from "react-redux";
 import LoadingOverlay from "react-loading-overlay";
+import PlanejamentoSemanal from "./planejamentoSemanal";
 
 const Main = (loading) => {
 
@@ -17,6 +18,7 @@ const Main = (loading) => {
             <main>
                 <Switch>
                     <Route exact path='/' component={TabsMenu}/>
+                    <Route exact path={'/planejamento'} component={PlanejamentoSemanal}/>
                     <Route exact path='/tarefaForm/:tarefaId' component={TarefaForm} />
                     <Route exact path='/editForm/:tarefaId' component={PopulatedForm} />
                     <Route exact path='/listTarefas' component={ListTarefas} />

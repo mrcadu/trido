@@ -70,7 +70,7 @@ const ListTarefas = ({tarefas,rerender,load}) => {
                 <Link style={style.link} to= {`/editForm/${tarefa.id}`} params={{tarefa:tarefa}} label="editarTarefa">{tarefa.nome}[{tarefa.duracao}]</Link>
                 <Button onClick={() => removerTarefa(tarefa.id)} style={style.botaoExcluir}/>
                 <Button onClick={() => concluirTarefa(tarefa.id)} style={style.botaoConfirmar}/>
-                <h4 style={style.texto}> {diasDaSemana[new Date(tarefa.data).getDay() + 1]} </h4>
+                <h4 style={style.texto}> {diasDaSemana[new Date(tarefa.data).getDay()]} </h4>
             </div>;
         })}
     </div>);
@@ -78,6 +78,11 @@ const ListTarefas = ({tarefas,rerender,load}) => {
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({load}, dispatch);
 }
+function mapStateToProps(state) {
+    return {
+        loading: state.loadingReducer.loading
+    };
+}
 let withTarefasComponent = WithTarefas(ListTarefas);
-let withRouterComponent = withRouter(withTarefasComponent);
-export default connect(mapDispatchToProps)(withRouterComponent);
+let withReduxComponent = connect(mapStateToProps, mapDispatchToProps)(withTarefasComponent);
+export default withRouter(withReduxComponent);
