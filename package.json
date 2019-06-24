@@ -34,6 +34,7 @@
     "react-router-dom": "^4.3.1",
     "react-select": "^2.0.0",
     "react-test-renderer": "^16.4.1",
+    "react-loading-overlay": "latest",
     "recompose": "^0.27.1",
     "redux": "^4.0.1",
     "redux-form": "^8.2.2",

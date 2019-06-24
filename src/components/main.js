@@ -4,19 +4,30 @@ import TabsMenu from "./tabsMenu";
 import TarefaForm from "./tarefa-form";
 import ListTarefas from "./listTarefas";
 import PopulatedForm from "./populatedForm"
+import {connect} from "react-redux";
+import LoadingOverlay from "react-loading-overlay";
 
-const Main = () => {
+const Main = (loading) => {
 
     return(
-        <main>
-            <Switch>
-                <Route exact path='/' component={TabsMenu}/>
-                <Route exact path='/tarefaForm/:tarefaId' component={TarefaForm} />
-                <Route exact path='/editForm/:tarefaId' component={PopulatedForm} />
-                <Route exact path='/listTarefas' component={ListTarefas} />
-            </Switch>
-        </main>)
+        <LoadingOverlay
+            active={loading.loading}
+            spinner
+            text='carregando'>
+            <main>
+                <Switch>
+                    <Route exact path='/' component={TabsMenu}/>
+                    <Route exact path='/tarefaForm/:tarefaId' component={TarefaForm} />
+                    <Route exact path='/editForm/:tarefaId' component={PopulatedForm} />
+                    <Route exact path='/listTarefas' component={ListTarefas} />
+                </Switch>
+            </main>
+        </LoadingOverlay>)
 
 };
-
-export default Main
+function mapStateToProps(state) {
+    return {
+        loading: state.loadingReducer.loading
+    };
+}
+export default connect(mapStateToProps)(Main);

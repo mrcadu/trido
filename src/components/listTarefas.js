@@ -3,9 +3,12 @@ import {Link, withRouter} from 'react-router-dom'
 import WithTarefas from "../HOC/withTarefas";
 import Button from "./button";
 import axios from "axios";
+import {connect} from "react-redux";
+import {load} from "../actions/loadingAction";
+import {bindActionCreators} from "redux";
 
 
-const ListTarefas = ({tarefas,rerender}) => {
+const ListTarefas = ({tarefas,rerender,load}) => {
     const style = {
         tarefas: {
             border: '1px solid #1abc9c',
@@ -44,6 +47,7 @@ const ListTarefas = ({tarefas,rerender}) => {
     const url = process.env.REACT_APP_FETCH_URL;
     let diasDaSemana = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
     const removerTarefa = (id) => {
+        load(true);
         axios.delete(url.concat('/tarefas/' + id)).then(
             () => {
                 rerender();
@@ -52,6 +56,7 @@ const ListTarefas = ({tarefas,rerender}) => {
         );
     };
     const concluirTarefa = (id) => {
+        load(true);
         axios.put(url.concat('/tarefas/' + id + '/complete')).then(
             () => {
                 rerender();
@@ -70,6 +75,9 @@ const ListTarefas = ({tarefas,rerender}) => {
         })}
     </div>);
 };
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({load}, dispatch);
+}
 let withTarefasComponent = WithTarefas(ListTarefas);
 let withRouterComponent = withRouter(withTarefasComponent);
-export default withRouterComponent;
+export default connect(mapDispatchToProps)(withRouterComponent);
