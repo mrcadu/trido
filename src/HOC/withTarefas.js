@@ -46,6 +46,11 @@ const WithTarefas = (WrappedComponent) => {
     function mapDispatchToProps(dispatch) {
         return bindActionCreators({load}, dispatch);
     }
-    return connect( mapDispatchToProps)(ListaTarefas);
+    function mapStateToProps(state) {
+        return {
+            loading: state.loadingReducer.loading
+        };
+    }
+    return connect(mapStateToProps, mapDispatchToProps)(ListaTarefas);
 };
 export default WithTarefas;

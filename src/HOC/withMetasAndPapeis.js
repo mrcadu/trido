@@ -47,7 +47,13 @@ const WithMetasAndPapeis = (WrappedComponent ) => {
     function mapDispatchToProps(dispatch) {
         return bindActionCreators({load}, dispatch);
     }
-    return connect(mapDispatchToProps)(Component);
+    function mapStateToProps(state) {
+        return {
+
+            loading: state.loadingReducer.loading
+        };
+    }
+    return connect(mapStateToProps, mapDispatchToProps)(Component);
 };
 
 export default WithMetasAndPapeis;
